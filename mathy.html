@@ -1,0 +1,151 @@
+
+<head>
+  <title>Mathy</title>
+</head>
+
+<body>
+	<div id="container">
+		{{> facebook}}
+		{{> header}}
+		{{> boxy}}
+		{{> footer}}
+	</div>		
+</body>
+
+<template name="facebook">
+	<div id="fb-root"></div>
+	<script>(function(d, s, id) {
+	  var js, fjs = d.getElementsByTagName(s)[0];
+	  if (d.getElementById(id)) return;
+	  js = d.createElement(s); js.id = id;
+	  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&appId=195494867128890&version=v2.0";
+	  fjs.parentNode.insertBefore(js, fjs);
+	}(document, 'script', 'facebook-jssdk'));</script>
+</template>
+
+<template name="header">
+	<header>
+		<h1>mathy</h1>
+		<h4>simple math facts for kids</h4>
+	</header>
+</template>
+
+<template name="boxy">
+	<div id="main">
+		<div id="board">
+		{{#if inGame}}
+			{{#if isOver}}
+				{{> results}}
+			{{else}}
+				{{> question}}
+			{{/if}}
+		{{else}}
+			{{> board}}
+		{{/if}}
+		</div>
+	</div>
+</template>
+
+<template name="board">
+	<div id="operator-selections">
+		<div id={{additionOperatorId}} class={{additionClass}}>
+			<div class="operation-label">addition</div>
+		</div>
+		<div id={{multiplicationOperatorId}} class={{multiplicationClass}}>
+			<div class="operation-label">multiplication</div>
+		</div>
+		<div id={{subtractionOperatorId}} class={{subtractionClass}}>
+			<div class="operation-label">subtraction</div>
+		</div>
+	</div>	
+
+	<div id="number-selections">
+		<div id="base-box" class="number-selection-box">
+			<div id="base" class="number-value-setup">{{base}}</div>
+			<div id="base-up" class="arrow-up"><img src="triangle-up.png" alt="triangle-up-active" width="50" height="40" /></div>
+			<div id="base-down" class="arrow-down"><img src="triangle-down.png" alt="triangle-down" width="50" height="40" /></div>
+			<div class="number-label-setup">base</div>
+		</div>
+		<div id="upto-box" class="number-selection-box">
+			<div id="upto" class="number-value-setup">{{upto}}</div>
+			<div id="upto-up" class="arrow-up"><img src="triangle-up.png" alt="triangle-up" width="50" height="40" /></div>
+			<div id="upto-down" class="arrow-down"><img src="triangle-down.png" alt="triangle-down" width="50" height="40" /></div>
+			<div class="number-label-setup">up to</div>
+		</div>
+	</div>	
+				
+	<div id="quiz-selections">
+		<div id="ten" class={{tenClass}}>
+			<div class={{tenLabel}}>10</div>
+		</div>
+		<div id="twenty-five" class={{twentyfiveClass}}>
+			<div class={{twentyLabel}}>25</div>
+		</div>
+		<div id="fifty" class={{fiftyClass}}>
+			<div class={{fiftyLabel}}>50</div>
+		</div>
+		<div id="one-hundred" class={{hundredClass}}>
+			<div class={{hundredLabel}}>100</div>
+		</div>
+		<div class="number-label-setup">number of questions</div>
+	</div>
+	<input id="start-game-button" value="start game">
+</template>
+	
+
+<template name="question">
+	<div id="board">
+		<div id="timer">{{timer}}</div>
+		<div id="a" class="number-asked">{{a}}</div>
+		<div id="b" class="number-asked">{{b}}
+			<div id="operation">{{symbol}}</div>
+		</div>
+		<div id="question-border"></div>
+		<div id="response">
+			<input type="number" id="player-guess" autofocus="autofocus">
+		</div>
+		<div id="progress-count" class="number-label-setup">{{count}} of {{total}}</div>
+		<div id="in-game-menu">quit game</div>
+	</div>
+</template>
+
+<template name="results">
+	<div id="board">
+		<div id="score-percentage" class="scoreboard-box">
+			<span>{{percentage}}%</span>
+			<div class= "number-label-setup">score</div>
+		</div>
+		<div id="total-time" class="scoreboard-box">
+			<span>{{time}}</span>
+			<div class= "number-label-setup">time</div>
+		</div>
+		<div id="questions-missed" class="scoreboard-box">
+			<span>{{correctQuestions}}</span>
+			<div class= "number-label-setup">correct</div>
+		</div>
+		<input id="play-again-button" value="play again">
+		<input id="design-new-game-button" value="new game">
+		<div id="missed-questions"></div>
+		<div id="missed-header" class="number-label-setup">missed questions</div>
+		<div class="missed-question">{{> missed}}</div>
+	</div>	
+</template>
+
+<template name="missed">
+	<div class="missed">
+		{{#if perfectScore}}
+			Perfect Score!
+		{{else}}
+			{{#each missed}}
+				<div>{{this}}</div>
+			{{/each}}
+		{{/if}}
+	</div>
+</template>
+
+<template name="footer">
+	<footer>
+		<div class="fb-share-button" data-href="http://mathy.meteor.com" data-layout="button_count"></div>
+	</footer>
+</template>
+
